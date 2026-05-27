@@ -8,7 +8,12 @@
 
 Backlog é organizado por fase do roadmap.
 
-Ver `docs/roadmap.md` para contexto das fases.
+Ver `docs/roadmap.md` (master index) e `docs/roadmap/` (detalhe por fase) para contexto.
+
+Sprints planejadas:
+
+* sprints 01–08 já existem como arquivos em `tasks/`
+* sprints 09+ ficam no `docs/roadmap/04-expansao.md` e seguintes até entrarem no horizonte de 2 sprints
 
 Cada item:
 

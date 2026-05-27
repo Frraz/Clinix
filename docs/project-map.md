@@ -659,6 +659,30 @@ stack.md
 arquitetura.md
 funcionalidades.md
 regras-de-negocio.md
+roadmap.md         (master index)
+```
+
+---
+
+# Roadmap detalhado
+
+Subpasta com 1 arquivo por fase + 2 tracks paralelos:
+
+```txt
+docs/roadmap/
+
+00-preparacao.md            (Pré-Fase 0)
+01-fundacao.md              (Fase 0)
+02-mvp.md                   (Fase 1)
+03-polimento.md             (Fase 1.5)
+04-expansao.md              (Fase 2)
+05-laboratorio.md           (Fase 2.5)
+06-inteligencia.md          (Fase 3)
+07-mobile.md                (Fase 4)
+08-plataforma.md            (Fase 5)
+09-enterprise.md            (Fase 6)
+10-go-to-market.md          (paralelo - negócio)
+11-cadencia-operacional.md  (paralelo - operação)
 ```
 
 ---
@@ -737,6 +761,10 @@ sprint-01.md
 sprint-02.md
 sprint-03.md
 sprint-04.md
+sprint-05.md
+sprint-06.md
+sprint-07.md
+sprint-08.md
 ```
 
 ---

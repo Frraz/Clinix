@@ -327,7 +327,8 @@ Arquivos importantes:
 * docs/stack.md
 * docs/regras-de-negocio.md
 * docs/funcionalidades.md
-* docs/roadmap.md
+* docs/roadmap.md (master index)
+* docs/roadmap/ (detalhamento por fase)
 * docs/project-map.md
 
 ### Técnica
