@@ -134,30 +134,140 @@ Gerenciar agenda operacional da clínica.
 
 ## Objetivo
 
-Gerenciar informações clínicas e histórico do paciente.
+Gerenciar informações clínicas e histórico do paciente em uma engine composable que serve as 8 especialidades-alvo.
 
 ---
 
 ## Funcionalidades
 
-* anamnese
-* evolução clínica
+* anamnese (estruturada por template de especialidade)
+* evolução clínica (SOAP ou template específico)
 * histórico médico
-* prescrições
+* prescrições (sistêmica, tópica, dietética, fisioterapêutica)
 * documentos
 * anexos
-* imagens
+* imagens clínicas (com consentimento e antes/depois)
 * exames
 * laudos
 * SOAP
 * CID
-* timeline clínica
-* templates clínicos
-* assinatura digital futura
-* upload de arquivos
+* timeline clínica unificada
+* templates clínicos versionados por especialidade
+* anotações privadas (psicologia) com sigilo reforçado
+* builder dinâmico de campos
+* assinatura digital simples (MVP) → ICP-Brasil (Fase 2)
+* upload de arquivos no R2
 * histórico completo
-* auditoria de alterações
-* controle de acesso
+* auditoria de alterações (e leitura em dados sensíveis)
+* controle de acesso por especialidade
+
+Detalhamento: `docs/prontuario.md`, `docs/templates-clinicos.md`.
+
+---
+
+# 7.1. ESPECIALIDADES-ALVO
+
+O Clinix atende **8 especialidades-alvo** desde o MVP, todas via prontuário composable + componentes específicos quando necessário.
+
+---
+
+## Clínicas médicas gerais
+
+* SOAP padrão
+* CID-10 com autocomplete
+* prescrições sistêmicas
+* atestados
+* solicitação de exames
+* timeline clínica
+
+---
+
+## Odontologia
+
+* odontograma com notação FDI
+* plano de tratamento com procedimentos
+* orçamento e parcelamento
+* histórico de procedimentos por dente
+* imagens odontológicas
+
+Detalhamento: `docs/odontograma.md`, `docs/pacotes-tratamento.md`.
+
+---
+
+## Fisioterapia
+
+* avaliação funcional (ROM, força, dor)
+* plano de tratamento com N sessões
+* evolução por sessão
+* exercícios recomendados
+* alta clínica
+
+Detalhamento: `docs/pacotes-tratamento.md`.
+
+---
+
+## Psicologia
+
+* escalas validadas: PHQ-9, GAD-7, DASS-21, BDI
+* aplicação digital com cálculo de score
+* gráfico de evolução por escala
+* anotações privadas com sigilo reforçado (`is_private`)
+* alerta automático em score de risco
+
+Detalhamento: `docs/escalas-testes.md`.
+
+---
+
+## Biomedicina / Laboratórios
+
+* solicitação de exames
+* upload de laudo externo (MVP)
+* entrega via portal e WhatsApp
+* operação interna completa (coleta, triagem, processamento, validação técnica) na Fase 2.5
+
+Detalhamento: `docs/laboratorio.md`.
+
+---
+
+## Dermatologia
+
+* anamnese dermatológica
+* mapa corporal de lesões (SVG)
+* dermatoscopia com anotações
+* fotos clínicas com metadados
+* descrição padronizada de lesão
+* prescrição tópica
+* protocolo de seguimento
+
+Detalhamento: `docs/dermatologia.md`, `docs/imagens-clinicas.md`.
+
+---
+
+## Clínicas de Estética
+
+* anamnese estética
+* checklist de contraindicações por procedimento
+* pacotes de tratamento com N sessões
+* fotos antes/depois com slider de comparação
+* orçamento e parcelamento por pacote
+* termo de consentimento por procedimento
+* lembrete de manutenção
+
+Detalhamento: `docs/estetica.md`, `docs/pacotes-tratamento.md`, `docs/imagens-clinicas.md`.
+
+---
+
+## Nutrição
+
+* anamnese nutricional
+* antropometria (peso, altura, IMC, circunferências, dobras, % gordura)
+* bioimpedância
+* plano alimentar versionado
+* recordatório alimentar
+* envio do plano via WhatsApp/portal
+* gráfico de evolução
+
+Detalhamento: `docs/nutricao.md`, `docs/antropometria.md`.
 
 ---
 
@@ -560,6 +670,71 @@ Expandir experiência operacional para dispositivos móveis.
 
 ---
 
+# 30.1. PERSONALIZAÇÃO POR CLÍNICA
+
+## Objetivo
+
+Permitir que cada clínica reflita sua identidade no sistema.
+
+---
+
+## Funcionalidades
+
+* upload de logo (principal e monocromática)
+* cor primária configurável (com validação de contraste)
+* dados completos da clínica (CNPJ, endereço, contatos, responsável técnico)
+* templates de documento personalizados (receitas, atestados, laudos, recibos, contratos)
+* templates de WhatsApp e email com identidade da clínica
+* portal do paciente com cores e logo da clínica
+* domínio próprio (Business+)
+* branding por unidade em operações multiunidade
+* preview ao vivo antes de aplicar
+* reset para padrão Clinix a qualquer momento
+
+Detalhamento em `docs/personalizacao.md`.
+
+---
+
+# 30.2. IMPORTAÇÃO E EXPORTAÇÃO DE DADOS
+
+## Objetivo
+
+Garantir portabilidade total: onboarding rápido de clínicas vindas de outros sistemas, e saída sem aprisionamento.
+
+---
+
+## Funcionalidades de importação
+
+* import de pacientes via CSV/Excel
+* import de profissionais
+* import de agenda histórica
+* import de contas a receber em aberto
+* import de documentos e anexos (ZIP estruturado)
+* mapeamento visual de colunas
+* templates de mapeamento reutilizáveis
+* preview antes de aplicar
+* validação por linha + relatório de erros
+* deduplicação inteligente (merge, skip, overwrite, create_anyway)
+* parsers dedicados para sistemas concorrentes (Fase 2)
+* import via API (Fase 2)
+
+---
+
+## Funcionalidades de exportação
+
+* export operacional (CSV, Excel, PDF) por módulo
+* export de agenda em iCal
+* export de prontuário individual em PDF
+* export completo da clínica em ZIP estruturado (offboarding)
+* export por paciente (LGPD — art. 18, V)
+* jobs assíncronos com notificação ao concluir
+* URLs assinadas com TTL
+* schema versionado e documentado publicamente
+
+Detalhamento em `docs/importacao-exportacao.md`.
+
+---
+
 # 31. DASHBOARDS E KPIs
 
 ## Funcionalidades
@@ -668,7 +843,94 @@ Expandir experiência operacional para dispositivos móveis.
 
 ---
 
-# 39. OBJETIVO DAS FUNCIONALIDADES
+# 39. ONBOARDING
+
+## Objetivo
+
+Levar a clínica do "comprou" ao "operando" em até 7 dias.
+
+---
+
+## Funcionalidades
+
+* wizard guiado de 10 passos
+* preenchimento automático via CNPJ
+* convite de profissionais e equipe
+* checklist pós-wizard
+* base de conhecimento
+* tour interativo
+* treinamento ao vivo (incluso na implantação)
+* sucesso do cliente proativo nos primeiros 90 dias
+
+Detalhamento em `docs/onboarding.md`.
+
+---
+
+# 40. SUPORTE AO CLIENTE
+
+## Funcionalidades
+
+* tickets via email, WhatsApp, in-app
+* base de conhecimento pública
+* ajuda contextual em cada tela
+* SLAs por plano
+* CSAT pós-ticket
+* status page pública
+* comunicação proativa em incidentes
+* chat in-app (Fase 2)
+* gerente de conta (Enterprise)
+
+Detalhamento em `docs/suporte.md`.
+
+---
+
+# 41. BACKUP E DISASTER RECOVERY
+
+## Funcionalidades
+
+* backup diário automatizado (PostgreSQL → R2)
+* backup semanal em provedor independente (B2)
+* PITR via WAL (Fase 2)
+* testes regulares de restauração
+* runbook documentado
+* status page em incidentes
+* RTO 4h / RPO 24h no MVP, 1h / 15min no Enterprise
+
+Detalhamento em `docs/backup-dr.md`.
+
+---
+
+# 42. ACESSIBILIDADE
+
+## Funcionalidades
+
+* WCAG 2.2 nível AA em todo o produto
+* navegação 100% por teclado
+* compatibilidade com leitores de tela
+* contraste validado
+* atalhos de teclado documentados
+* tap targets generosos no mobile
+* aspiração WCAG AAA no portal do paciente
+
+Detalhamento em `docs/acessibilidade.md`.
+
+---
+
+# 43. PERFORMANCE
+
+## SLOs principais
+
+* API p95 < 500ms
+* LCP frontend < 2.5s
+* portal do paciente < 2s em 3G
+* envio de WhatsApp < 10s
+* uptime 99.5% MVP / 99.9% Enterprise
+
+Detalhamento em `docs/performance.md`.
+
+---
+
+# 44. OBJETIVO DAS FUNCIONALIDADES
 
 O Clinix deve evoluir para uma plataforma operacional completa para saúde.
 
@@ -682,3 +944,7 @@ O sistema deve unir:
 * inteligência
 * produtividade
 * experiência premium
+* portabilidade total
+* personalização por clínica
+* acessibilidade
+* performance superior

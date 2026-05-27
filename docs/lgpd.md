@@ -172,6 +172,8 @@ Export deve fornecer:
 * documentos
 * prazo: 15 dias
 
+Implementação detalhada em `docs/importacao-exportacao.md`.
+
 ---
 
 # 15. RETENÇÃO DE DADOS

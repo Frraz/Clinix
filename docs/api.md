@@ -548,7 +548,107 @@ Nunca permitir:
 
 ---
 
-# 37. OBJETIVO FINAL
+# 37. NAMESPACES POR ESPECIALIDADE
+
+A maior parte do domínio é genérica (pacientes, agendamentos, prontuário composable). Quando uma especialidade precisa de endpoints específicos, ficam em sub-namespace dedicado.
+
+## Padrão
+
+```
+/api/v1/                                 — recursos genéricos
+/api/v1/specialty/{area}/...             — recursos específicos por especialidade
+```
+
+## Exemplos
+
+### Dermatologia
+
+```
+GET    /api/v1/specialty/dermatology/lesion-maps/{patient_id}/
+POST   /api/v1/specialty/dermatology/lesion-maps/{patient_id}/
+GET    /api/v1/specialty/dermatology/lesions/?patient={id}&needs_followup=true
+POST   /api/v1/specialty/dermatology/dermatoscopy/
+POST   /api/v1/specialty/dermatology/biopsies/
+PATCH  /api/v1/specialty/dermatology/biopsies/{id}/result/
+```
+
+### Estética
+
+```
+GET    /api/v1/specialty/aesthetics/procedures/                  # catálogo
+POST   /api/v1/specialty/aesthetics/assessments/
+POST   /api/v1/specialty/aesthetics/contraindication-checks/
+```
+
+### Nutrição
+
+```
+POST   /api/v1/specialty/nutrition/assessments/
+POST   /api/v1/specialty/nutrition/plans/                        # cria nova versão
+GET    /api/v1/specialty/nutrition/plans/{patient_id}/current/
+POST   /api/v1/specialty/nutrition/plans/{id}/send/              # envia ao paciente
+GET    /api/v1/foods/?q=...                                       # catálogo global
+GET    /api/v1/specialty/nutrition/anthropometry/?patient={id}
+```
+
+### Odontologia
+
+```
+GET    /api/v1/specialty/dental/charts/{patient_id}/
+POST   /api/v1/specialty/dental/charts/{patient_id}/version/
+POST   /api/v1/specialty/dental/procedures/
+GET    /api/v1/specialty/dental/treatment-plans/{patient_id}/
+```
+
+### Psicologia
+
+```
+GET    /api/v1/scales/                                            # catálogo
+POST   /api/v1/scales/{code}/applications/
+GET    /api/v1/scales/{code}/applications/?patient={id}
+```
+
+### Componentes transversais
+
+```
+POST   /api/v1/uploads/clinical-image/sign                        # presigned PUT
+POST   /api/v1/clinical-images/{id}/finalize
+GET    /api/v1/clinical-images/?patient={id}&category=before
+
+GET    /api/v1/treatment-packages/                                # catálogo
+POST   /api/v1/treatment-package-instances/                       # venda
+POST   /api/v1/treatment-package-sessions/                        # executar
+
+GET    /api/v1/anthropometry/?patient={id}
+POST   /api/v1/anthropometry/
+
+GET    /api/v1/record-templates/?specialty=dermatology
+POST   /api/v1/record-entries/
+```
+
+## Princípios
+
+* **versionamento global** — todas as rotas sob `/api/v1/`
+* **especialidade não vaza para recursos genéricos** — pacientes e agendamentos são únicos
+* **tenant inferido do JWT** — nunca passar `tenant_id` em query string
+* **paginação, filtros, ordenação** — padrão consistente em todas as rotas
+* **validação dinâmica** — `record-entries` valida `content_json` contra `record-template.schema_json`
+* **permissões por especialidade** — ver `docs/auth.md`
+
+Detalhes em:
+* `docs/dermatologia.md`
+* `docs/estetica.md`
+* `docs/nutricao.md`
+* `docs/odontograma.md`
+* `docs/escalas-testes.md`
+* `docs/templates-clinicos.md`
+* `docs/pacotes-tratamento.md`
+* `docs/antropometria.md`
+* `docs/imagens-clinicas.md`
+
+---
+
+# 38. OBJETIVO FINAL
 
 Construir uma API:
 
@@ -559,3 +659,4 @@ Construir uma API:
 * performática
 * preparada para web, mobile e integrações
 * preparada para crescimento enterprise
+* extensível por especialidade sem comprometer a generalidade do core

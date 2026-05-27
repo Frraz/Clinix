@@ -296,7 +296,64 @@ Nunca permitir:
 
 ---
 
-# 25. OBJETIVO FINAL
+# 25. APPS POR PERFIL E ESPECIALIDADE (FASE 4)
+
+O app profissional terá variações por especialidade quando útil:
+
+## Médico geral / Dermatologista
+* agenda + check-in remoto
+* prontuário com edição offline
+* foto rápida com câmera nativa para anexar a lesão/foto clínica
+* visualização do mapa de lesões (dermato)
+
+## Dentista
+* agenda + acesso ao odontograma
+* radiografias com pinch-zoom
+* registro de procedimento por sessão
+
+## Fisioterapeuta
+* registro de sessão (ROM, dor, evolução)
+* exercícios com vídeo
+* envio de orientação ao paciente via WhatsApp do app
+
+## Psicólogo
+* aplicação de escalas pelo paciente
+* anotações com biometria (face/touch) para `is_private`
+* nunca sincroniza conteúdo privado para cache acessível por outro
+
+## Biomédico / Laboratório
+* leitura de barcode da amostra (Fase 2.5)
+* registro de etapa do exame
+
+## Nutricionista
+* registro de antropometria
+* edição rápida do plano alimentar
+* envio direto ao paciente
+
+## Esteticista
+* check-in da sessão
+* captura padronizada de foto antes/depois (overlay de referência)
+* registro de evolução do pacote
+
+## App Paciente (transversal)
+* agendamento self-service
+* check-in digital
+* portal completo na palma da mão
+* notificações push de lembretes e resultados
+* visualização de plano alimentar, fotos clínicas suas, escalas a responder
+* pagamento via PIX/cartão
+
+## Princípios transversais
+
+* **mesmo backend** — app consome a mesma API REST
+* **offline básico** com sync ao reconectar
+* **biometria nativa** (TouchID/FaceID) para dados sensíveis
+* **MMKV** para tokens, sem dados clínicos em claro
+* **EAS Build / OTA updates** para liberar correções rápidas
+
+---
+
+# 26. OBJETIVO FINAL
 
 Construir uma camada mobile:
 
@@ -305,4 +362,5 @@ Construir uma camada mobile:
 * segura
 * reutilizando ao máximo o web
 * lançada apenas após o web estar maduro
+* com variações de perfil que respeitam a operação real de cada especialidade
 * preparada para crescer com o produto

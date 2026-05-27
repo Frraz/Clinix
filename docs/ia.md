@@ -333,7 +333,75 @@ Nunca permitir:
 
 ---
 
-# 27. OBJETIVO FINAL
+# 27. CASOS DE USO POR ESPECIALIDADE (FASE 3)
+
+Cada especialidade tem casos de uso de IA específicos. Todos são **assistentes**, nunca substitutos do profissional.
+
+## Clínica médica geral
+
+* sumarização clínica do histórico
+* sugestão de CID-10
+* SOAP assistido
+* alertas de interação medicamentosa
+* triagem de risco
+
+## Odontologia
+
+* sugestão de procedimentos baseada no odontograma
+* estimativa de duração do plano de tratamento
+* alerta de retorno necessário
+
+## Fisioterapia
+
+* sugestão de protocolo baseado em diagnóstico
+* análise de evolução de ROM e força
+* alerta de estagnação no tratamento
+
+## Psicologia
+
+* análise de evolução de escalas (PHQ-9, GAD-7)
+* sinalização de score de risco (sem expor conteúdo)
+* sumarização anônima para supervisão
+
+## Biomedicina / Laboratório
+
+* validação técnica preliminar
+* sinalização de resultado fora do range
+* sugestão de exames complementares
+
+## Dermatologia
+
+* análise ABCDE assistida em imagem dermatoscópica
+* sugestão de seguimento com base na suspicion
+* sumarização do histórico de lesões
+* sugestão de CID
+* (importante: nunca diagnóstico, sempre sugestão para revisão)
+
+## Clínicas de Estética
+
+* sugestão de protocolo com base no perfil
+* previsão de satisfação (com histórico)
+* análise de adesão em pacote
+* sugestão de manutenção
+
+## Nutrição
+
+* análise de aderência ao plano (recordatório + antropometria)
+* sugestão de substituições compatíveis com restrições
+* sugestão de ajuste do plano com base na evolução
+* chatbot do paciente para dúvidas básicas (com escopo limitado)
+
+## Princípios transversais
+
+* **toda sugestão é mostrada como sugestão**, com explicação e botão de aceitar/rejeitar
+* **feedback do profissional alimenta a calibração** (não é treinamento direto, mas tracking de aceitação)
+* **dados sensíveis são scrubbed** antes de ir para provider externo
+* **registros em audit log** de cada sugestão e decisão
+* **gradual rollout**: começa por sumarização (baixo risco), avança para sugestões clínicas
+
+---
+
+# 28. OBJETIVO FINAL
 
 Construir uma camada de IA:
 
@@ -342,5 +410,6 @@ Construir uma camada de IA:
 * auditável
 * explicável
 * respeitosa à autonomia clínica
+* progressivamente liberada por especialidade conforme validação
 * economicamente viável
 * preparada para evolução contínua

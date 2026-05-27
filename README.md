@@ -6,15 +6,18 @@
 
 # Sobre o Projeto
 
-O Clinix é uma plataforma operacional inteligente desenvolvida para:
+O Clinix é uma plataforma operacional inteligente desenvolvida para **8 especialidades-alvo no MVP**:
 
-* clínicas médicas
-* clínicas odontológicas
+* clínicas médicas gerais
+* odontologia
 * fisioterapia
 * psicologia
-* biomédicos
-* laboratórios
-* operações multidisciplinares de saúde
+* biomedicina / laboratórios
+* dermatologia
+* clínicas de estética
+* nutrição
+
+E preparada para evoluir para centros de diagnóstico, telemedicina, multi-especialidade e redes regionais.
 
 O objetivo do projeto é construir uma plataforma:
 
@@ -146,15 +149,61 @@ Com:
 
 ## Documentações complementares
 
+### Arquitetura e técnica
+
+* docs/api.md
 * docs/auth.md
 * docs/tenancy.md
-* docs/whatsapp.md
+* docs/database-schema.md
+* docs/design-system.md
+* docs/project-map.md
+* docs/performance.md
+* docs/backup-dr.md
+
+### Módulos de domínio
+
 * docs/prontuario.md
 * docs/laboratorio.md
-* docs/billing.md
+* docs/whatsapp.md
+* docs/convenios.md
+* docs/estoque.md
+* docs/crm.md
+* docs/portal-paciente.md
+* docs/workflows.md
+* docs/notificacoes.md
 * docs/mobile.md
 * docs/ia.md
+
+### Especialidades específicas
+
+* docs/dermatologia.md
+* docs/estetica.md
+* docs/nutricao.md
+
+### Componentes transversais
+
+* docs/templates-clinicos.md
+* docs/imagens-clinicas.md
+* docs/pacotes-tratamento.md
+* docs/antropometria.md
+* docs/odontograma.md
+* docs/escalas-testes.md
+
+### Compliance e qualidade
+
 * docs/lgpd.md
+* docs/auditoria.md
+* docs/compliance-conselhos.md
+* docs/acessibilidade.md
+
+### SaaS e operação
+
+* docs/billing.md
+* docs/personalizacao.md
+* docs/importacao-exportacao.md
+* docs/onboarding.md
+* docs/suporte.md
+* docs/roadmap.md
 
 ---
 

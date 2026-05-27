@@ -1020,7 +1020,113 @@ A modelagem deve permitir:
 
 ---
 
-# 67. OBJETIVO DO DATABASE SCHEMA
+# 67. TABELAS POR ESPECIALIDADE
+
+A engine do prontuário composable (ver `docs/templates-clinicos.md`) cobre a maior parte das especialidades via JSONB validado. Quando uma especialidade exige estrutura tipada (queries específicas, integridade referencial, performance), tabelas dedicadas são criadas.
+
+## Engine de templates (transversal)
+
+* `specialty` — catálogo das 8 áreas
+* `record_template` — templates versionados por especialidade
+* `record_entry` — entrada de prontuário com `content_json` validado
+* `record_version` — versionamento da entrada
+
+## Odontologia
+
+* `dental_chart` — odontograma versionado com `state_json`
+* `dental_procedure` — procedimento por dente/face
+* `treatment_plan` — plano com múltiplos procedimentos
+
+Detalhes em `docs/odontograma.md`.
+
+## Dermatologia
+
+* `skin_lesion_map` — mapa versionado com `lesions_json`
+* `lesion` — denormalização para queries (suspicion, follow-up)
+* `dermatoscopy_note` — anotação dermatoscópica
+* `biopsy_order` — pedido + acompanhamento de biópsia
+
+Detalhes em `docs/dermatologia.md`.
+
+## Estética
+
+* `esthetic_assessment` — anamnese + contraindicações
+* `contraindication` (global) — catálogo
+* `procedure_checklist_response` — resposta por sessão
+* `aesthetic_procedure` — catálogo de procedimentos da clínica
+
+Reusa `treatment_package*` (ver `docs/pacotes-tratamento.md`).
+
+## Nutrição
+
+* `nutritional_assessment` — anamnese + recordatório + objetivo
+* `nutrition_plan` — plano versionado com `plan_data` JSONB
+* `food` (global) — base TACO/USDA
+
+## Antropometria (transversal: nutrição, estética, fisio)
+
+* `anthropometry_record` — medidas + índices calculados
+* `bioimpedance_record` — dump do equipamento
+* `anthropometry_goal` — meta
+
+Detalhes em `docs/antropometria.md`.
+
+## Pacotes de tratamento (transversal: estética, odonto, fisio)
+
+* `treatment_package` — catálogo
+* `treatment_package_instance` — venda
+* `treatment_package_session` — sessão executada
+
+Detalhes em `docs/pacotes-tratamento.md`.
+
+## Psicologia (escalas)
+
+* `scale` (global) — catálogo de escalas validadas
+* `scale_application` — aplicação a paciente, com `is_private=True` por padrão
+
+Detalhes em `docs/escalas-testes.md`.
+
+## Imagens clínicas (transversal)
+
+* `clinical_image` — vinculada a paciente, profissional, opcionalmente a entrada de prontuário ou sessão de pacote
+* metadados de captura, consentimento, anonimização
+
+Detalhes em `docs/imagens-clinicas.md`.
+
+---
+
+## Índices recomendados
+
+```sql
+-- Busca em conteúdo dinâmico do prontuário
+CREATE INDEX idx_record_entry_content_gin
+  ON record_entry USING GIN (content_json);
+
+-- Mapa de lesões (queries por morfologia, etc.)
+CREATE INDEX idx_skin_lesion_map_gin
+  ON skin_lesion_map USING GIN (lesions_json);
+
+-- Plano alimentar (busca de alimentos)
+CREATE INDEX idx_nutrition_plan_data_gin
+  ON nutrition_plan USING GIN (plan_data);
+
+-- Pacotes ativos por paciente
+CREATE INDEX idx_pkg_instance_patient_status
+  ON treatment_package_instance (patient_id, status);
+```
+
+---
+
+## RLS reforçado
+
+Aplicar RLS por `tenant_id` em todas as tabelas novas. Em adição:
+
+* `scale_application` — RLS adicional: somente profissional aplicador ou supervisor
+* `clinical_image` (categoria `before/after` com `consent_marketing=False`) — nunca aparece em listagens marketing
+
+---
+
+# 68. OBJETIVO DO DATABASE SCHEMA
 
 Construir uma fundação:
 
@@ -1031,3 +1137,4 @@ Construir uma fundação:
 * segura
 * preparada para crescimento
 * preparada para operação enterprise
+* capaz de atender as 8 especialidades-alvo via engine composable + tabelas tipadas onde necessário

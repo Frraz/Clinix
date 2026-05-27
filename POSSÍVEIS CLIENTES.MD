@@ -190,21 +190,29 @@ Telefone: 94 9 9118-9233
 Nome: Dr. Sergio Santana - Especialista em coluna e hérnia de disco
 Área: Fisioterapia / Coluna
 Endereço: R. Minas Gerais, 135
-Telefone:
+Telefone:94 992068844
 
 --------------------------------------------------
 
 Nome: Ortofisio Dr. José Maurício de Montreuil
 Área: Ortopedia / Fisioterapia
 Endereço: R. Vítor Batista, 221,
-Telefone:
+Telefone:94981025314
 
 --------------------------------------------------
 
 Nome: Fisio Clínica Cirlaine
 Área: Fisioterapia
 Endereço: R. Cesar Brasil, 282
-Telefone:
+Telefone:94991683567
+
+======================================================================
+
+
+Nome: Fisio Sim+
+Área: Fisioterapia
+Endereço: R: Castelo Branco, nº 260
+Telefone: 94 991580377
 
 ======================================================================
 DERMATOLOGIA
@@ -213,7 +221,8 @@ DERMATOLOGIA
 Nome: Dra. Mariana Leite Dermatologia
 Área: Dermatologia
 Endereço: R. Nossa Sra. Aparecida, 130 - Centro,
-Telefone:
+Telefone: 94991926117
+
 
 ======================================================================
 ESTÉTICA
@@ -222,12 +231,18 @@ ESTÉTICA
 Nome: CLINIC DAY
 Área: Estética
 Endereço: R. Primeiro de Maio, 140 - Centro,
-Telefone:
+Telefone:94991313824
 
 --------------------------------------------------
 
 Nome: Clínica Bellare
 Área: Estética
 Endereço: R. Clóves de Souza, nº 131,
-Telefone:
+Telefone: 94 991707048
 
+======================================================================
+
+Nome: dra. Rafaela Carvalho
+Área: Estética
+Endereço: R. Amália Pinto, nº 634
+Telefone: 94 991646442

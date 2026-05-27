@@ -18,15 +18,18 @@ O sistema será:
 
 # Objetivo do Produto
 
-Construir uma plataforma moderna e robusta para:
+Construir uma plataforma moderna e robusta capaz de atender **as 8 especialidades-alvo do MVP**:
 
-* clínicas médicas
-* odontologia
-* fisioterapia
-* psicologia
-* laboratórios
-* biomédicos
-* operações multidisciplinares
+1. clínicas médicas gerais
+2. odontologia
+3. fisioterapia
+4. psicologia
+5. biomedicina / laboratórios
+6. dermatologia
+7. clínicas de estética
+8. nutrição
+
+E preparada para evoluir para outras áreas (centros de diagnóstico, telemedicina, multi-especialidade, redes de clínicas).
 
 Priorizar:
 
@@ -217,6 +220,43 @@ O sistema deve ser preparado para:
 
 ---
 
+# Personalização por Tenant
+
+Toda clínica deve poder personalizar:
+
+* logo
+* cor primária
+* dados da clínica (CNPJ, endereço, contatos, responsável técnico)
+* templates de documentos (receitas, atestados, laudos, recibos)
+* templates de comunicação (WhatsApp, email)
+* portal do paciente
+* multi-unidade com branding por unidade
+
+Toda geração de PDF deve aplicar o branding do tenant.
+
+Nunca permitir CSS/HTML arbitrário injetado pelo tenant.
+
+Detalhamento em `docs/personalizacao.md`.
+
+---
+
+# Portabilidade de Dados
+
+O Clinix NUNCA aprisiona o cliente.
+
+Toda funcionalidade de dados deve considerar:
+
+* import (entrada de clínicas vindas de outros sistemas)
+* export operacional (CSV, PDF, Excel, iCal)
+* export completo (offboarding sem fricção)
+* portabilidade LGPD (paciente — art. 18, V)
+
+Schemas de import/export versionados e documentados publicamente.
+
+Detalhamento em `docs/importacao-exportacao.md`.
+
+---
+
 # Qualidade de Código
 
 Seguir:
@@ -281,10 +321,76 @@ Consultar documentação complementar em:
 
 Arquivos importantes:
 
-* docs/regras-de-negocio.md
-* docs/database-schema.md
+### Base
+* docs/vision.md
 * docs/arquitetura.md
-* docs/funcionalidades.md
 * docs/stack.md
+* docs/regras-de-negocio.md
+* docs/funcionalidades.md
+* docs/roadmap.md
+* docs/project-map.md
+
+### Técnica
+* docs/api.md
 * docs/auth.md
 * docs/tenancy.md
+* docs/database-schema.md
+* docs/design-system.md
+* docs/performance.md
+* docs/backup-dr.md
+
+### Módulos de domínio
+* docs/prontuario.md
+* docs/laboratorio.md
+* docs/whatsapp.md
+* docs/convenios.md
+* docs/estoque.md
+* docs/crm.md
+* docs/portal-paciente.md
+* docs/workflows.md
+* docs/notificacoes.md
+* docs/mobile.md
+* docs/ia.md
+
+### Especialidades específicas
+* docs/dermatologia.md
+* docs/estetica.md
+* docs/nutricao.md
+
+### Componentes transversais
+* docs/templates-clinicos.md
+* docs/imagens-clinicas.md
+* docs/pacotes-tratamento.md
+* docs/antropometria.md
+* docs/odontograma.md
+* docs/escalas-testes.md
+
+### Compliance
+* docs/lgpd.md
+* docs/auditoria.md
+* docs/compliance-conselhos.md
+* docs/acessibilidade.md
+
+### SaaS e operação
+* docs/billing.md
+* docs/personalizacao.md
+* docs/importacao-exportacao.md
+* docs/onboarding.md
+* docs/suporte.md
+
+---
+
+# Especialidades-alvo
+
+Toda nova funcionalidade deve ser pensada para servir as 8 especialidades através de:
+
+* prontuário composable (templates por especialidade — ver `docs/templates-clinicos.md`)
+* engine única reusada em todas as áreas
+* componentes específicos quando exigidos (ver `docs/odontograma.md`, `docs/antropometria.md`)
+* schema flexível (JSONB validado) sem duplicar tabelas por especialidade
+
+Nunca:
+
+* criar prontuário hard-coded para uma especialidade
+* duplicar lógica por especialidade
+* impedir que clínica multi-especialidade habilite mais de uma área

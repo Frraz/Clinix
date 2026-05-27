@@ -874,7 +874,73 @@ O Clinix vende:
 
 ---
 
-# 48. OBJETIVO FINAL
+# 48. DIFERENCIAÇÃO POR ESPECIALIDADE E VOLUME
+
+O Clinix atende 8 especialidades com perfis de uso diferentes. Algumas (estética, dermatologia) usam muito storage de imagens; outras (psicologia) usam pouco mas exigem sigilo reforçado.
+
+## Variáveis que escalam o plano
+
+* nº de profissionais (usuários ativos)
+* nº de especialidades habilitadas (cada uma desbloqueia componentes específicos)
+* volume de armazenamento (R2, principalmente fotos clínicas)
+* volume de mensagens WhatsApp (Evolution API + Meta)
+* nº de unidades (Fase 2)
+* recursos avançados (IA, BI, integrações)
+
+## Modelo de plano (sugestão para revisão comercial)
+
+### Starter
+* 1–3 profissionais
+* 1 especialidade
+* 10 GB de storage
+* 1.000 mensagens WhatsApp/mês
+* sem IA
+
+### Professional
+* até 10 profissionais
+* até 3 especialidades
+* 50 GB de storage
+* 5.000 mensagens WhatsApp/mês
+* IA básica (sumarização)
+
+### Business
+* até 30 profissionais
+* até 8 especialidades
+* 200 GB de storage
+* 20.000 mensagens WhatsApp/mês
+* IA completa
+* multi-unidade
+
+### Enterprise
+* customizado
+* SSO, SLA, gerente de conta
+* tenant dedicado opcional
+
+## Add-ons
+
+* WhatsApp extra (pacotes de 1k mensagens)
+* Storage extra (por 50 GB)
+* Especialidade adicional fora do plano
+* Profissional adicional fora do limite
+* Telemedicina (Fase 4)
+* IA Premium (Fase 3)
+
+## Trial
+
+* 14 dias gratuitos com todas as features do Professional
+* sem cartão exigido no onboarding
+* downgrade para Starter ao final se não converter
+
+## Coerência
+
+* Stripe gerencia billing recorrente (ver `ADRs/009-pagamentos-mercadopago-stripe.md`)
+* webhook de Stripe atualiza o `tenant.plan`
+* features liberadas via flags ligadas ao plano
+* downgrade não deleta dados — desativa funcionalidade até reativação
+
+---
+
+# 49. OBJETIVO FINAL
 
 Construir um modelo financeiro:
 
@@ -882,6 +948,7 @@ Construir um modelo financeiro:
 * escalável
 * previsível
 * lucrativo
+* alinhado ao perfil de uso de cada especialidade
 * profissional
 
 Sem perder:

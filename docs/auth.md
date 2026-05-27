@@ -601,7 +601,62 @@ A autenticação do Clinix deve transmitir:
 
 ---
 
-# 44. OBJETIVO FINAL
+# 44. PERMISSÕES POR ESPECIALIDADE
+
+O RBAC do Clinix considera **especialidade** como dimensão de permissão além de role + módulo.
+
+## Roles típicas
+
+* `admin` — gestão da clínica
+* `gestor` — operação + relatórios
+* `recepcionista` — agenda + check-in + cobrança avulsa
+* `profissional` — atendimento clínico (com escopo por especialidade)
+* `financeiro` — financeiro + relatórios financeiros
+* `tecnico_lab` (Fase 2.5) — operação laboratorial
+
+## Permissões por especialidade
+
+Cada profissional tem 1+ especialidades atribuídas. Aciona:
+
+* somente templates de prontuário daquela especialidade são oferecidos
+* componentes específicos (odontograma, body map, antropometria) só aparecem para profissionais habilitados
+* aplicação de escalas de psicologia restrita a `specialty=psychology`
+* prescrição tópica de dermato restrita a profissionais com habilitação dermato
+* validação de procedimentos estéticos só por habilitados
+
+## Sigilo psicológico (camada extra)
+
+`RecordEntry.is_private=True` (padrão em psicologia):
+
+* leitura restrita ao profissional autor
+* outros profissionais veem que existe entrada, sem conteúdo
+* `break_glass` exige justificativa + alerta + audit log
+* admin do tenant nunca vê em condição normal
+* admin Clinix nunca vê em prod
+
+## Object permissions
+
+`django-guardian` aplica permissões por objeto:
+
+* paciente compartilhado entre vários profissionais com permissão de visualização
+* prontuário restrito ao autor + supervisor (se houver)
+* foto clínica restrita ao profissional que capturou e ao paciente
+
+## Validação no backend e frontend
+
+* backend valida em todo endpoint (`HasModulePermission`, `HasSpecialty`, `IsObjectOwner`)
+* frontend esconde ações sem permissão (`<Can permission="...">`)
+* tentativa de bypass gera audit log + alerta
+
+## Multi-especialidade
+
+Profissional pode ter mais de uma especialidade (ex: médico que atua em dermato e estética). As permissões somam-se sem se cancelar.
+
+Detalhes em `docs/templates-clinicos.md`, `docs/escalas-testes.md`, `docs/dermatologia.md`.
+
+---
+
+# 45. OBJETIVO FINAL
 
 Construir uma camada de autenticação:
 

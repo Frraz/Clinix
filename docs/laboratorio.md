@@ -368,7 +368,35 @@ Nunca permitir:
 
 ---
 
-# 31. OBJETIVO FINAL
+# 31. ESCOPO POR FASE
+
+O módulo laboratorial tem dois escopos claramente separados:
+
+## MVP (Fase 1)
+
+* solicitação de exame a partir do prontuário
+* upload de laudo externo (PDF assinado por laboratório parceiro)
+* entrega via portal do paciente e WhatsApp
+* histórico vinculado ao prontuário
+
+Esse escopo atende **clínicas médicas que apenas solicitam exames**, e laboratórios pequenos que terceirizam análise. Ver `tasks/mvp.md`.
+
+## Fase 2.5 — Operação interna completa
+
+* fluxo completo descrito nas seções anteriores deste documento (coleta → triagem → processamento → validação → assinatura → entrega)
+* etiquetas e barcode
+* fila por área
+* SLA por exame
+* integração com equipamentos (HL7/ASTM)
+* assinatura digital ICP-Brasil
+* dashboard de SLA
+* coleta domiciliar
+
+Esse escopo atende **laboratórios independentes** e **clínicas com laboratório interno**. Ver `docs/roadmap.md` e `tasks/backlog.md` (Fase 2.5).
+
+---
+
+# 32. OBJETIVO FINAL
 
 Construir um módulo laboratorial:
 
@@ -377,3 +405,5 @@ Construir um módulo laboratorial:
 * seguro juridicamente
 * operacionalmente eficiente
 * preparado para crescer com a clínica
+* escopo MVP simples atendendo solicitação + entrega
+* escopo completo atendendo laboratórios independentes na Fase 2.5

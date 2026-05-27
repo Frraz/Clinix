@@ -142,6 +142,10 @@ ADRs/
 004-nextjs.md
 005-rbac.md
 006-event-driven.md
+007-storage-cloudflare-r2.md
+008-whatsapp-evolution-api.md
+009-pagamentos-mercadopago-stripe.md
+010-observabilidade-sentry.md
 ```
 
 ---
@@ -662,12 +666,55 @@ regras-de-negocio.md
 # Arquivos complementares
 
 ```txt
+# Arquitetura e técnica
+api.md
 auth.md
 tenancy.md
-billing.md
+database-schema.md
+design-system.md
+project-map.md
+performance.md
+backup-dr.md
+
+# Módulos de domínio
+prontuario.md
+laboratorio.md
 whatsapp.md
-ia.md
+convenios.md
+estoque.md
+crm.md
+portal-paciente.md
+workflows.md
+notificacoes.md
 mobile.md
+ia.md
+
+# Especialidades específicas
+dermatologia.md
+estetica.md
+nutricao.md
+
+# Componentes transversais
+templates-clinicos.md
+imagens-clinicas.md
+pacotes-tratamento.md
+antropometria.md
+odontograma.md
+escalas-testes.md
+
+# Compliance e qualidade
+lgpd.md
+auditoria.md
+compliance-conselhos.md
+acessibilidade.md
+
+# SaaS e operação
+billing.md
+personalizacao.md
+importacao-exportacao.md
+onboarding.md
+suporte.md
+roadmap.md
 ```
 
 ---
@@ -688,6 +735,8 @@ mvp.md
 bugs.md
 sprint-01.md
 sprint-02.md
+sprint-03.md
+sprint-04.md
 ```
 
 ---
@@ -717,6 +766,11 @@ fluxo-financeiro.md
 fluxo-laboratorio.md
 fluxo-prontuario.md
 fluxo-whatsapp.md
+fluxo-onboarding.md
+fluxo-portal-paciente.md
+fluxo-mfa.md
+fluxo-pacote-tratamento.md
+fluxo-plano-alimentar.md
 ```
 
 ---

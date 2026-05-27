@@ -685,7 +685,65 @@ O prontuário do Clinix deve transmitir:
 
 ---
 
-# 49. OBJETIVO FINAL
+# 49. ENGINE COMPOSABLE — ENTREGÁVEL DO MVP
+
+O prontuário Clinix é construído sobre uma **engine composable** que serve as 8 especialidades-alvo do MVP através de templates versionados.
+
+## Como funciona
+
+* `Specialty` define a especialidade (medical, dental, physio, psico, biomed, derm, aesthetics, nutrition)
+* `RecordTemplate` é um template versionado com `schema_json` (JSON Schema) e `ui_json` (layout)
+* `RecordEntry` é a entrada preenchida, valida `content_json` contra o `schema_json` do template
+* Frontend gera Zod schema dinamicamente para validação inline
+* PostgreSQL GIN index em `content_json` permite busca rápida
+
+## Componentes específicos via tipos de campo
+
+Tipos de campo dedicados na engine:
+
+* `dental_chart` → renderiza `<DentalChart>` (odontologia)
+* `body_map` → renderiza `<BodyLesionMap>` (dermatologia)
+* `scale_form` → renderiza escala validada (psicologia)
+* `anthropometry` → renderiza `<AnthropometryForm>` (nutrição/estética)
+* `meal_plan` → renderiza `<MealPlanEditor>` (nutrição)
+* `image` → renderiza upload + thumbnails (todas)
+* `signature` → assinatura visual (todas)
+
+## Sigilo psicológico
+
+Entradas podem ter `is_private=True`. Quando ativo:
+
+* somente o profissional aplicador vê o conteúdo completo
+* outros profissionais veem apenas que existe entrada (sem conteúdo)
+* admin Clinix nunca vê em prod
+* `break_glass` exige justificativa registrada
+* audit log registra **leitura** (não só edição)
+
+## Versionamento
+
+* template versionado — atualizar gera nova versão
+* entrada salva `template_version` (snapshot)
+* entrada antiga renderiza com a versão em que foi salva
+* nunca perde dados por atualização de template
+
+## Templates seed (MVP)
+
+Distribuídos pelo Clinix para todas as 8 especialidades:
+
+* medicina geral: `anamnese_medica_geral`, `evolucao_soap`
+* odontologia: `anamnese_odontologica`, `avaliacao_inicial_odonto`
+* fisioterapia: `avaliacao_funcional`, `evolucao_sessao_fisio`
+* psicologia: `anamnese_psicologica`, `escala_phq9`, `evolucao_psicologica`
+* biomedicina: `solicitacao_exame`
+* dermatologia: `anamnese_dermato`, `descricao_lesao`, `dermatoscopia`
+* estética: `anamnese_estetica`, `checklist_contraindicacoes`, `sessao_estetica`
+* nutrição: `anamnese_nutricional`, `avaliacao_antropometrica`, `plano_alimentar`
+
+Detalhamento completo em `docs/templates-clinicos.md`.
+
+---
+
+# 50. OBJETIVO FINAL
 
 Construir um prontuário eletrônico:
 
@@ -694,7 +752,7 @@ Construir um prontuário eletrônico:
 * seguro
 * rápido
 * auditável
-* multi-especialidade
+* multi-especialidade (8 áreas servidas pela mesma engine)
 * preparado para IA
 * preparado para operação enterprise
 
