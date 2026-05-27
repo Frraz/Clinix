@@ -117,6 +117,13 @@ Nome: Odonto Alfa - Clínica Odontológica
 Endereço: R. Eliomar Santos Galvão, 246 - Jaderlândia,
 Telefone: 94 9 9277-8849
 
+--------------------------------------------------
+
+Nome: Sorria Jaderlandia
+Área: Clínica Odontológica
+Endereço: R. Eliomar Santos Galvão, 261 - Jaderlândia,
+Telefone: 94 9 9246-1911
+
 
 ======================================================================
 PSICOLOGIA
